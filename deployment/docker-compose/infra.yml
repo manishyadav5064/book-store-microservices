@@ -1,7 +1,7 @@
 name: 'book-store-microservices'
 services:
   catalog-db:
-    image: postgres:18-alpine
+    image: postgres:16-alpine
     container_name: catalog-db
     environment:
       - POSTGRES_USER=postgres
@@ -9,6 +9,8 @@ services:
       - POSTGRES_DB=book-store
     ports:
       - "5432:5432"
+    volumes:
+      - catalog_data:/var/lib/postgresql/data   # <-- THIS PERSISTS YOUR DATA
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -18,3 +20,14 @@ services:
       resources:
         limits:
           memory: 500m
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+volumes:
+  catalog_data:
