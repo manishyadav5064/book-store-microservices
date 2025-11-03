@@ -1,0 +1,7 @@
+name: CI Build
+
+on:
+  workflow_dispatch:   # <--- Add this to allow manual trigger
+  push:
+    branches:
+      - main
