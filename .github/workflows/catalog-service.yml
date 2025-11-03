@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and Publish Docker Image
         env:
-          DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/book-store-catalog-service:latest
+          DOCKER_IMAGE_NAME: manishyadav5064/book-store-catalog-service:latest
         run: |
           ./mvnw spring-boot:build-image -DskipTests \
             -Dspring-boot.build-image.imageName=$DOCKER_IMAGE_NAME
