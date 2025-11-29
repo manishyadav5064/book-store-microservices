@@ -7,4 +7,6 @@ public interface OrderService {
     OrderDto createOrder(String username, CreateOrderRequest request);
 
     OrderDto getOrderById(Long id);
+
+    void processNewOrders();
 }

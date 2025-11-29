@@ -31,6 +31,9 @@ orders:
   cancelled-orders-queue: cancelled-orders
   error-orders-queue: error-orders
 
+  publish-order-events-job-cron: "*/5 * * * * *"
+  new-orders-job-cron: "*/10 * * * * *"
+
 resilience4j:
   retry:
     instances:
