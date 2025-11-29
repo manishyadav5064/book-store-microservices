@@ -48,6 +48,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductResponse getProduct(String code) {
+        return productRepository.findByCode(code)
+                .map(ProductMapper::toResponse)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with code: " + code));
+    }
+
+    @Override
     public Page<ProductResponse> getAllProducts(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         Page<Product> productPage = productRepository.findAll(pageable);

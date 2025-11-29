@@ -22,9 +22,15 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
         ProductResponse productResponse = productService.getProduct(id);
+        return ResponseEntity.ok(productResponse);
+    }
+
+    @GetMapping("/code/{code}")
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable String code) {
+        ProductResponse productResponse = productService.getProduct(code);
         return ResponseEntity.ok(productResponse);
     }
 

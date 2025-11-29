@@ -73,6 +73,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
+    // Handle Invalid Order exception (use this in services)
+    @ExceptionHandler(InvalidOrderException.class)
+    public ResponseEntity<ApiError> handleNotFound(
+            InvalidOrderException ex,
+            HttpServletRequest request) {
+
+        ApiError apiError = ApiError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Invalid order")
+                .message(ex.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
+
     @ExceptionHandler(CannotCreateTransactionException.class)
     public ResponseEntity<?> handleDatabaseConnectionError(CannotCreateTransactionException ex) {
 

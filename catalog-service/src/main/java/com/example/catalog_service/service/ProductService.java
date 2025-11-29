@@ -11,6 +11,8 @@ public interface ProductService {
 
     ProductResponse getProduct(Long id);
 
+    ProductResponse getProduct(String code);
+
     Page<ProductResponse> getAllProducts(int page, int size, String sortBy);
 
     void deleteProduct(Long id);
