@@ -2,6 +2,7 @@ package com.example.order_service.service.impl;
 
 import com.example.order_service.dto.OrderCreatedEvent;
 import com.example.order_service.dto.OrderDto;
+import com.example.order_service.dto.OrderSummary;
 import com.example.order_service.dto.request.CreateOrderRequest;
 import com.example.order_service.mapper.OrderEventMapper;
 import com.example.order_service.mapper.OrderMapper;
@@ -58,6 +59,19 @@ public class OrderServiceImpl implements OrderService {
         for (Order order : orders) {
             this.process(order);
         }
+    }
+
+    @Override
+    public List<OrderSummary> getOrders(String username) {
+        return orderRepository.findOrderSummariesByUsername(username);
+    }
+
+    @Override
+    public OrderDto getOrderByOrderNumber(String username, String orderNumber) {
+        Order order = orderRepository.findByUsernameAndOrderNumber(username, orderNumber)
+                .orElseThrow(() -> new RuntimeException("Order not found for orderNumber: " + orderNumber));
+
+        return OrderMapper.toDto(order);
     }
 
     private void process(Order order) {

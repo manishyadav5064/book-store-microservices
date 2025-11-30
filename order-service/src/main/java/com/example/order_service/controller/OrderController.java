@@ -1,6 +1,7 @@
 package com.example.order_service.controller;
 
 import com.example.order_service.dto.OrderDto;
+import com.example.order_service.dto.OrderSummary;
 import com.example.order_service.dto.request.CreateOrderRequest;
 import com.example.order_service.service.OrderService;
 import com.example.order_service.service.SecurityService;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -28,8 +30,17 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(username, request));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderDto> getOrder(@PathVariable Long id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+    @GetMapping("/{orderNumber}")
+    public ResponseEntity<OrderDto> getOrder(@PathVariable(value = "orderNumber") String orderNumber) {
+        String username = securityService.getLoginUsername();
+        log.info("fetching order : {} of user : {}", orderNumber, username);
+        return ResponseEntity.ok(orderService.getOrderByOrderNumber(username, orderNumber));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<OrderSummary>> getOrders() {
+        String username = securityService.getLoginUsername();
+        log.info("fetching orders of user : {}", username);
+        return ResponseEntity.ok(orderService.getOrders(username));
     }
 }
