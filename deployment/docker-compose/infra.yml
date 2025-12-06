@@ -42,6 +42,27 @@ services:
         limits:
           memory: 500m
 
+  notification-db:
+    image: postgres:16-alpine
+    container_name: notification-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=book-store-notification-db
+    ports:
+      - "35432:5432"
+    volumes:
+      - notification_data:/var/lib/postgresql/data   # <-- THIS PERSISTS YOUR DATA
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 500m
+
   bookstore-rabbitmq:
     image: rabbitmq:4.0.4-management
     container_name: bookstore-rabbitmq
@@ -72,3 +93,4 @@ services:
 volumes:
   catalog_data:
   order_data:
+  notification_data:
