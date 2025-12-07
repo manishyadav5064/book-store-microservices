@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class OrderEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_event_id_generator")
-    @SequenceGenerator(name = "order_event_id_generator", sequenceName = "order_event_id_seq")
+    @SequenceGenerator(name = "order_event_id_generator", sequenceName = "order_event_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)

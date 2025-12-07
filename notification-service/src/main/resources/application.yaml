@@ -13,6 +13,18 @@ spring:
     username: ${RABBITMQ_USERNAME:guest}
     password: ${RABBITMQ_PASSWORD:guest}
 
+  mail:
+    host: ${MAIL_HOST:127.0.0.1}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:mailUser}
+    password: ${MAIL_PASSWORD:mailPass}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
   port: 8083
   shutdown: graceful
@@ -30,15 +42,3 @@ notifications:
   delivered-orders-queue: delivered-orders
   cancelled-orders-queue: cancelled-orders
   error-orders-queue: error-orders
-
-  mail:
-    host: ${MAIL_HOST:127.0.0.1}
-    port: ${MAIL_PORT:1025}
-    username: ${MAIL_USERNAME:mailUser}
-    password: ${MAIL_PASSWORD:mailPass}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
